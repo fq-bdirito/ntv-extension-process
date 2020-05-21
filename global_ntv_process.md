@@ -1,5 +1,5 @@
 # Global NTV or Extension - Guest Template
-```
+
 Dear {!Opportunity.Primary_Tenant_copy__c},
 
 Hello from Furnished Quarters! This is a reminder that Notice to Vacate on your lease ending on {!Opportunity.Departure_Date__c} at {!Opportunity.Primary_Product__c} is due on {!Opportunity.Notice_Due__c}.
@@ -14,10 +14,10 @@ I WISH TO EXTEND: https://cs.furnishedquarters.com/notices/extend?resid={!Opport
 
 
 FurnishedQuarters.com | 212.367.9400 | 158 West 27th Street. 8th Floor. New York, NY 10001
-```
 
 
-# Link button to Rails Route - Link to Client Solutions Staging
+
+# Link button to Rails Route
 
 <br>
 
