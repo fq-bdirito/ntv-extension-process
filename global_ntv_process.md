@@ -15,7 +15,7 @@ I WISH TO EXTEND: https://cs.furnishedquarters.com/notices/extend?resid={!Opport
 
 FurnishedQuarters.com | 212.367.9400 | 158 West 27th Street. 8th Floor. New York, NY 10001
 
-
+<br>
 
 # Link button to Rails Route
 
@@ -24,32 +24,26 @@ FurnishedQuarters.com | 212.367.9400 | 158 West 27th Street. 8th Floor. New York
 # Partner Confirms Departure
 * Email Template - OOM Departure Confirmed - Partner
 * https://furnishedquarters--demo.lightning.force.com/lightning/setup/CommunicationTemplatesEmail/page?address=%2F00Xq0000000NrXl
-* button url - https://client-solutions-staging.herokuapp.com/notices/confirm-departure?resid={! OOM__c.Id }
+* button url - https://client-solutions-staging.herokuapp.com/notices/confirm-departure?resid={!Opportunity.Id }
 
-```html
+
 <a href="https://client-solutions-staging.herokuapp.com/notices/confirm-departure?resid={!Opportunity.Id}" target="_blank">Confirm Departure</a>
-```
+
 
 <br>
 
 # Partner Confirms Extension
 * Email Template - OOM Lease Extension - Partner
 * https://furnishedquarters--demo.lightning.force.com/lightning/setup/CommunicationTemplatesEmail/page?address=%2F00Xq0000000NqBU
-* https://client-solutions-staging.herokuapp.com/notices/partner-confirm-extension?extid={! extension_req_id }
+* https://client-solutions-staging.herokuapp.com/notices/partner-confirm-extension?extid={!Extension_Request__c.Id}
 
-```html
+
 <a href="https://client-solutions-staging.herokuapp.com/notices/partner-confirm-extension?extid={!Extension_Request__c.Id}" target="_blank">Confirm Extension</a>
-```
 
-#### An Opportunity can have multiple extension requests
-#### Select all extensions related to a given opportunity that partner did not confirm yet
-```
-select id, opportunity__c, partner_extension_confirmed_by__c from extension_request__c where opportunity__c='006q000000Kaie9AAB' and partner_extension_confirmed_by__c=null
-```
+<br>
 
 # Guest Confirms Extension
 https://furnishedquarters--demo.lightning.force.com/lightning/setup/CommunicationTemplatesEmail/page?address=%2F00Xq0000000SGNT%3Fsetupid%3DCommunicationTemplatesEmail
 
-```html
 <a target="_blank" href="https://client-solutions-staging.herokuapp.com/notices/guest-confirm-extension?extid={!Extension_Request__c.Id}">Confirm Extension Request</a>
-```
+
