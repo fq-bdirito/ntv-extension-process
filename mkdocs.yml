@@ -1,1 +1,4 @@
-site_name: My Docs
+site_name: Global Notice and Extension Process
+nav: 
+  - User: index.md
+  - Tech: tech.md
