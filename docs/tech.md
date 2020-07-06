@@ -1,5 +1,11 @@
 # Tech Guide
 
+
+<a href="https://furnishedquarters--herokudev.lightning.force.com/lightning/r/Opportunity/0060m00000FN2zmAAD/view" target="_blank">
+  Test reservation used for this demo
+  <img src="../assets/res-1.gif" alt="sample reservation">
+</a>
+
 <br>
 
 ## Routes

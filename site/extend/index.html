@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Extend - Global Notice and Extension Process</title>
+        <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../css/font-awesome-4.5.0.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="../css/highlight.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+	
+	<script src="../js/jquery-1.10.2.min.js"></script>
+        <script src="../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../js/highlight.pack.js"></script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="..">Global Notice and Extension Process</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                    <li >
+                        <a href="..">Home</a>
+                    </li>
+                    <li class="active">
+                        <a href="./">Extend</a>
+                    </li>
+                    <li >
+                        <a href="../notice/">Notice</a>
+                    </li>
+                    <li >
+                        <a href="../tech/">Tech</a>
+                    </li>
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                    <li >
+                        <a rel="next" href="..">
+                            <i class="fa fa-arrow-left"></i> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../notice/">
+                            Next <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#global-extension-process">Global Extension Process</a></li>
+            <li><a href="#guest-requests-extension">Guest Requests Extension</a></li>
+            <li><a href="#partner-confirms-extension-availability">Partner Confirms Extension Availability</a></li>
+            <li><a href="#fq-approves-extension">FQ Approves Extension</a></li>
+            <li><a href="#notify-partner-to-update-reservation">Notify Partner to Update Reservation</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h1 id="global-extension-process">Global Extension Process</h1>
+<p><a href="https://furnishedquarters--herokudev.lightning.force.com/lightning/r/Opportunity/0060m00000FN2zmAAD/view" target="_blank">
+  Test reservation used for this demo
+  <img src="../assets/res-1.gif" alt="sample reservation">
+</a></p>
+<p><br></p>
+<h4 id="guest-requests-extension">Guest Requests Extension</h4>
+<p>Guest receives NTV Email and requests for extension
+<img src="../assets/guest-extension.gif"></p>
+<p>A new Extension Request record is created on Salesforce and the following fields are updated:</p>
+<ul>
+<li><strong>Request</strong> - text field captures guest's full name and requested extension date</li>
+<li><strong>Opportunity</strong> - lookup field to its associated Reservation</li>
+<li><strong>Primary Partner Contact</strong>- lookup relates to the reservation's <code>Primary_Partner_Contact__c</code> field<ul>
+<li>This lookup field is needed for workflow rule <code>to email</code> recepient</li>
+</ul>
+</li>
+<li><strong>Start Date</strong> - date field set to current departure date</li>
+<li><strong>End Date</strong> - date field set to requested date by guest</li>
+</ul>
+<p><img src="../assets/extension-request-1.gif"></p>
+<p><br></p>
+<h4 id="partner-confirms-extension-availability">Partner Confirms Extension Availability</h4>
+<p>As soon as a new Extension Request record is created, an auto email is sent to partner</p>
+<ul>
+<li>Workflow Rule - <a href="https://furnishedquarters--herokudev.lightning.force.com/lightning/setup/WorkflowRules/page?address=%2F01Q0m00000077D4&nodeId=WorkflowRules" target="_blank">OOM Lease Extension - Partner</a></li>
+<li>Email template - <a href="https://furnishedquarters--herokudev.lightning.force.com/lightning/setup/CommunicationTemplatesEmail/page?address=%2F00X0m000000z4nY" target="_blank">OOM Lease Extension - Partner</a></li>
+</ul>
+<p><img src="../assets/partner-extension.gif"></p>
+<p>The following fields on Extension Request record are updated in salesforce:</p>
+<ul>
+<li><strong>Partner Extension Option</strong> - picklist that captures partner's selection from Client Solutions app</li>
+<li><strong>Is Available</strong> - picklist with values <code>Yes</code> or <code>No</code> to confirm availability of extension</li>
+<li><strong>Rate Change</strong> - picklist with values <code>Yes</code> or <code>No</code> to confirm any rate changes</li>
+<li><strong>Partner Confirmed New Rate</strong> - currency field captures new rate if there's a rate change, otherwise field remains blank</li>
+<li><strong>Partner Extension Confirmed By</strong> - text field captures partner's signature and date</li>
+<li><strong>Partner Confirmed End Date</strong> - date field that captures confirmed end date<ul>
+<li>If date requested by guest is available, <code>Partner_Confirmed_End_Date__c</code> will be same as <code>End_Date__c</code></li>
+<li>If date requested by guest is not available, a different date will be set</li>
+</ul>
+</li>
+</ul>
+<p><img src="../assets/extension-request-2.png"></p>
+<p><br></p>
+<h4 id="fq-approves-extension">FQ Approves Extension</h4>
+<p>When extension is confirmed by partner an auto email is sent to Global Leasing team</p>
+<ul>
+<li>Workflow Rule - <a href="https://furnishedquarters--herokudev.lightning.force.com/lightning/setup/WorkflowRules/page?address=%2F01Q0m00000077DY&nodeId=WorkflowRules" target="_blank">OOM Partner Confirmed Extension</a></li>
+<li>Email Template - <a href="https://furnishedquarters--herokudev.lightning.force.com/lightning/setup/CommunicationTemplatesEmail/page?address=%2F00X0m0000012BNO" target="_blank">OOM Partner Confirmed Extension</a></li>
+</ul>
+<p><img src="../assets/global-extension.png"></p>
+<p><br></p>
+<h4 id="notify-partner-to-update-reservation">Notify Partner to Update Reservation</h4>
+<p>If extension proposal from partner is approved the <code>FQ Accepts Partner Terms</code> checkbox will be checked and an auto email is sent to partner displaying details of extension</p>
+<ul>
+<li>Workflow Rule - <a href="https://furnishedquarters--herokudev.lightning.force.com/lightning/setup/WorkflowRules/page?address=%2F01Q0m00000077GI&nodeId=WorkflowRules" target="_blank">OOM FQ Approved Extension</a></li>
+<li>Email Template - <a href="https://furnishedquarters--herokudev.lightning.force.com/lightning/setup/CommunicationTemplatesEmail/page?address=%2F00X0m0000012BRB" target="_blank">OOM FQ Approved Extension</a></li>
+</ul>
+<p><img src="../assets/partner-extension-2.gif"></p>
+<p><br></p></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>var base_url = '..';</script>
+        <script data-main="../mkdocs/js/search.js" src="../mkdocs/js/require.js"></script>
+        <script src="../js/base.js"></script><div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

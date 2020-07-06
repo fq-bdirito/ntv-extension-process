@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Tech - Global Notice and Extension Process</title>
+        <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../css/font-awesome-4.5.0.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="../css/highlight.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+	
+	<script src="../js/jquery-1.10.2.min.js"></script>
+        <script src="../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../js/highlight.pack.js"></script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="..">Global Notice and Extension Process</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                    <li >
+                        <a href="..">Home</a>
+                    </li>
+                    <li >
+                        <a href="../extend/">Extend</a>
+                    </li>
+                    <li >
+                        <a href="../notice/">Notice</a>
+                    </li>
+                    <li class="active">
+                        <a href="./">Tech</a>
+                    </li>
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                    <li >
+                        <a rel="next" href="../notice/">
+                            <i class="fa fa-arrow-left"></i> Previous
+                        </a>
+                    </li>
+                    <li class="disabled">
+                        <a rel="prev" >
+                            Next <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#tech-guide">Tech Guide</a></li>
+            <li><a href="#routes">Routes</a></li>
+            <li><a href="#handling-invalid-url">Handling Invalid Url</a></li>
+            <li><a href="#global-notice-process">Global Notice Process</a></li>
+            <li><a href="#global-extension-process">Global Extension Process</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h1 id="tech-guide">Tech Guide</h1>
+<p><br></p>
+<h2 id="routes">Routes</h2>
+<h6 id="configroutesrb"><code>./config/routes.rb</code></h6>
+<pre><code class="rb"># Notice Routes
+# departure routes
+get &quot;/notices/confirm-departure&quot;, to: &quot;notices#confirmdeparture&quot;
+post &quot;/notices/submitconfirmation&quot;, to: &quot;notices#submitconfirmation&quot;
+get &quot;/notices/departure-confirmed&quot;, to: &quot;notices#departureconfirmed&quot;
+get &quot;/notices/departure-confirmation-error&quot;, to: &quot;notices#departureerror&quot;
+get &quot;/notices/partner-confirm-departure&quot;, to: &quot;notices#partnerconfirmdeparture&quot;
+post &quot;/notices/partner-confirms-departure&quot;, to: &quot;notices#partner_confirms_departure&quot;
+
+# extension routes
+get &quot;/notices/extend&quot;, to: &quot;notices#extend&quot;
+post &quot;/notices/submitextension&quot;, to: &quot;notices#submitextension&quot;
+get &quot;/notices/extension-confirmed&quot;, to: &quot;notices#extensionconfirmed&quot;
+get &quot;/notices/extension-error&quot;, to: &quot;notices#extensionerror&quot;
+get &quot;/notices/partner-confirm-extension&quot;, to: &quot;notices#partnerconfirmextension&quot;
+post &quot;/notices/partner-confirms-extension&quot;, to: &quot;notices#partner_confirms_extension&quot;
+get &quot;/notices/confirmation-success&quot;, to: &quot;notices#confirmationsuccess&quot; 
+get &quot;/notices/already-confirmed&quot;, to: &quot;notices#alreadyconfirmed&quot;
+get &quot;/notices/fq-confirmation-partner&quot;, to: &quot;notices#fqconfirmationpartner&quot;
+</code></pre>
+
+<p><br></p>
+<h2 id="handling-invalid-url">Handling Invalid Url</h2>
+<ul>
+<li>Redirects to <code>/notices/404</code> page if <code>resid</code> or <code>extid</code> is missing or invalid</li>
+<li>See <code>notices_controller#is_valid_id</code> helper method for validation details</li>
+</ul>
+<p><img src="../assets/error.gif"></p>
+<p><br>
+<br></p>
+<h2 id="global-notice-process">Global Notice Process</h2>
+<ul>
+<li>Guest receives NTV email and confirms departure</li>
+<li>Clicking on <code>Confirm Departure</code> link will redirect them to <code>/notices/confirm-departure</code> path</li>
+</ul>
+<p><img src="../assets/guest-departure.gif"></p>
+<h6 id="appcontrollersnotices_controllerrb"><code>./app/controllers/notices_controller.rb</code></h6>
+<pre><code class="rb">
+class NoticesController &lt; ApplicationController
+def confirmdeparture
+    if is_valid_id(params[:resid]) == false
+        redirect_to &quot;/notices/404&quot;
+        return
+    end
+
+    @departure = salesforce.query(&quot;
+        SELECT Id, Notice_Due__c, RecordTypeId, Departure_Confirmed__c, Departure_Date__c 
+        FROM Opportunity 
+        WHERE Id = '&quot;+params[:resid]+&quot;'&quot;
+    )
+
+    if @departure.first.nil? 
+        redirect_to &quot;/notices/404&quot;
+        return
+    end
+
+    @departure.each do |item| 
+        if item.Departure_Confirmed__c == true
+            redirect_to handle_path(notices_departure_confirmation_error_path, item.RecordTypeId)
+        end
+    end    
+end
+end
+</code></pre>
+
+<ul>
+<li>Renders <code>./app/views/notices/confirmdeparture.html.erb</code> template</li>
+<li>Checks if query string params are valid</li>
+<li>Checks if departure is already confirmed</li>
+<li>If record is found, guest will be redirected to <code>Already Confirmed</code> page</li>
+<li>When guest submits form, POST request is made to <code>/notices/submitconfirmation</code> route</li>
+</ul>
+<p><br></p>
+<h6 id="appcontrollersnotices_controllerrb_1"><code>./app/controllers/notices_controller.rb</code></h6>
+<pre><code class="rb">class NoticesController &lt; ApplicationController
+    # ...
+
+    def submitconfirmation
+        # ...
+            # ...
+            if params[:recordtypeid] == '012300000000Y6vAAE'
+                @confirmdeparture = salesforce.update('Opportunity', 
+                    Id: params[:res], 
+                    Notice_Contact_Partner_By__c: Time.now.to_date, 
+                    Provider_Notice_Given__c: true, 
+                    Departure_Confirmed_By__c: confirmed_by(params[:fullname]), 
+                    Notice_Status__c: &quot;Notice&quot;,
+                    ntv_notice__c: 1, 
+                    Departure_Confirmed__c: 1
+                )
+            else 
+                # ...
+            end
+
+            if @confirmdeparture
+                # Display the success page
+                redirect_to notices_departure_confirmed_path
+            else
+                # If the reservation was already confirmed, display the error page
+                redirect_to handle_path(notices_departure_submission_error_path, params[:recordtypeid])
+            end
+        end
+    end
+end
+</code></pre>
+
+<ul>
+<li>If the reservation's <code>RecordTypeId</code> is <code>OOM - Out of Market</code> the above fields will be updated on Salesforce</li>
+<li>Guest is redirected to <code>/notices/departure-confirmed</code> path after departure is confirmed</li>
+<li>If guest tries to refresh the page or re-submit the form, they will be redirected to <code>/notices/departure-confirmation-error</code> path</li>
+</ul>
+<p><br></p>
+<p>An auto email will be sent to the reservation's <code>Primary_Partner_Contact__c</code> if the following conditions are met:</p>
+<ul>
+<li><code>Partner_NTV_Confirmed__c</code> is false (checkbox is unchecked)</li>
+<li><code>Departure_Confirmed__c</code> is true (checkbox is checked)</li>
+<li><code>Partner_Type__c</code> picklist is either:<ul>
+<li>Corporate Housing</li>
+<li>Hotel</li>
+<li>Property Direct Furnished</li>
+</ul>
+</li>
+</ul>
+<p><img src="../assets/partner-type.png"></p>
+<ul>
+<li>Workflow Rule - <a href="https://furnishedquarters--herokudev.lightning.force.com/lightning/setup/WorkflowRules/page?address=%2F01Q0m0000007797&nodeId=WorkflowRules" target="_blank">NTV Provider Notice Confirmed</a></li>
+<li>Email Template - <a href="https://furnishedquarters--herokudev.lightning.force.com/lightning/setup/CommunicationTemplatesEmail/page?address=%2F00X0m0000012BKK" target="_blank">Provider Notice Confirmed</a></li>
+</ul>
+<p><br></p>
+<p>Partner will recieve and email which redirects them to <code>/notices/partner-confirm-departure</code> path
+<img src="../assets/partner-departure.gif"></p>
+<h6 id="appcontrollersnotices_controllerrb_2"><code>./app/controllers/notices_controller.rb</code></h6>
+<pre><code class="rb">class NoticesController &lt; ApplicationController
+    # ...
+    def partner_confirms_departure
+        # ...
+        if params[:ntvconfirmed] == &quot;true&quot; || @reservation.first.Partner_NTV_Confirmed__c == true
+            # ...
+        else
+            if params[:recordtypeid] == '012300000000Y6vAAE'            # of record type OOM
+                @confirmation = salesforce.update('Opportunity', 
+                    Id: params[:res], 
+                    Partner_NTV_Confirmed__c: true, 
+                    Partner_NTV_Confirmed_By__c: confirmed_by(params[:fullname])
+                )
+            end
+
+            if @confirmation 
+                redirect_to handle_path(notices_confirmation_success_path, params[:recordtypeid])
+            else 
+                redirect_to handle_path(notices_already_confirmed_path, params[:recordtypeid])
+            end
+        end
+    end
+end
+</code></pre>
+
+<ul>
+<li>When partner submits form, a POST request is made to <code>/notices/partner-confirm-departure</code> route</li>
+<li>The above fields are updated on the Reservation record</li>
+<li>Partner is redirected to <code>/notices/confirmation-success</code> path</li>
+<li>If partner refreshes the page or tries to re-submit the form they will be redirected to <code>/notices/already-confirmed</code> path</li>
+</ul>
+<p><br></p>
+<p>When <code>Partner_NTV_Confirmed__c</code> is set to <code>true</code> it will trigger a workflow and sends Global Leasing team an email notifying partner has confirmed guest's departure</p>
+<ul>
+<li>Workflow Rule: <a href="https://furnishedquarters--herokudev.lightning.force.com/lightning/setup/WorkflowRules/page?address=%2F01Q0m000000778n&nodeId=WorkflowRules" target="_blank">NTV Partner - Departure Confirmation</a></li>
+<li>Email Template: <a href="https://furnishedquarters--herokudev.lightning.force.com/lightning/setup/CommunicationTemplatesEmail/page?address=%2F00X0m000000z4nd" target="_blank">OOM Departure Confirmed - Partner</a></li>
+</ul>
+<p><br>
+<br></p>
+<h2 id="global-extension-process">Global Extension Process</h2>
+<p>Guest receives NTV email and requests for extension
+<img src="../assets/guest-extension.gif"></p>
+<ul>
+<li>GET request is made to <code>/notices/extend</code> path</li>
+<li>When guest submits form a POST request is made to <code>/notices/submitextension</code> path</li>
+</ul>
+<p><br></p>
+<h6 id="appcontrollersnotices_controllerrb_3"><code>./app/controllers/notices_controller.rb</code></h6>
+<pre><code class="rb"># ...
+def submitextension
+    # ...
+
+    if extension &amp;&amp; extension.empty? == false 
+        # ...
+    elsif reservation.Departure_Confirmed__c == true 
+        # ...
+    elsif params[:monthtomonth] == &quot; true &quot;
+        # check if month-to-month is true, meaning an extension may be submitted
+        extension_params = {
+            Opportunity__c: params[:res],
+            Request__c: params[:fullname] + &quot; requested an extension date of &quot; + 
+                format_date(params[:extensiondate]),
+            Start_Date__c:  params[:departuredate].to_date,
+            End_Date__c: params[:extensiondate].to_date,
+            Primary_Partner_Contact__c: params[:primarypartnerid]
+        }
+
+        # @addnote will be false in the case that extension request was not created. 
+        # In this case forward to an error page
+        @addnote = salesforce.create('Extension_Request__c', extension_params)
+
+        if @addnote
+            redirect_to notices_extension_confirmed_path
+        else
+            redirect_to handle_path(notices_extension_submission_error_path, reservation.RecordTypeId)
+        end
+    else
+        redirect_to handle_path(notices_extension_departure_confirmed_path, reservation.RecordTypeId)
+    end
+end
+</code></pre>
+
+<ul>
+<li>A new <code>Extension_Request__c</code> record is created on salesforce, with the above fields updated</li>
+<li>Guest will be redirected to <code>/notices/extension-confirmed</code> path</li>
+<li>If guest already submitted an extension and tries to re-submit it will redirect guest to <code>/notices/extension-error</code> path</li>
+<li>If guest refreshes the page or clicks on <code>I Wish to Extend</code> button from NTV email, it will also redirect guest to <code>/notices/extension-error</code> path</li>
+<li>Note: the contact email is determined from query string of <code>oom=true</code> using <code>globalnotices@furnishedquarters.com</code> for OOM record types.<ul>
+<li>Check out the <code>notices_controller#handle_path</code> helper method for more details</li>
+</ul>
+</li>
+</ul>
+<p><br></p>
+<p>As soon as a new <code>Extension_Request__c</code> record is created a workflow rule is triggered and an an auto email is sent to Partner</p>
+<ul>
+<li>Workflow Rule - <a href="https://furnishedquarters--herokudev.lightning.force.com/lightning/setup/WorkflowRules/page?address=%2F01Q0m00000077D4&nodeId=WorkflowRules" target="_blank">OOM Lease Extension - Partner</a></li>
+<li>Email template - <a href="https://furnishedquarters--herokudev.lightning.force.com/lightning/setup/CommunicationTemplatesEmail/page?address=%2F00X0m000000z4nY" target="_blank">OOM Lease Extension - Partner</a></li>
+</ul>
+<p><img src="../assets/partner-extension.gif">
+<img src="../assets/cs-partner-extension.png"></p>
+<ul>
+<li>
+<p>Partner can choose from dropdown menu of options to confirm if extension is available</p>
+<ul>
+<li>Default is set to <code>Extension Available, Same Rate</code></li>
+<li>If partner chooses either option with <code>Rate Change</code> and/or <code>Different Date</code><ul>
+<li>A required input field(s) will appear to capture the new rate and/or new date</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>A POST request is made to <code>/notices/partner-confirms-extension</code> route when partner submits form</p>
+</li>
+</ul>
+<p><br></p>
+<h6 id="appcontrollersnotices_controllerrb_4"><code>./app/controllers/notices_controller.rb</code></h6>
+<pre><code class="rb"># ...
+def partner_confirms_extension
+    # ...
+    if #
+        # checks if url params are valid
+    elsif # ...
+        # checks if extension is already confirmed
+    else 
+        extension_params = {
+            Id: params[:extid],
+            Partner_Extension_Option__c: params[:extension],
+            Partner_Extension_Confirmed_By__c: confirmed_by(params[:fullname]),
+            Is_Available__c: 'Yes',
+            Rate_Change__c: 'No',
+            Partner_Confirmed_End_Date__c: @extension.End_Date__c
+        }
+
+        if params[:extension] == &quot;Extension Available, Same Rate&quot;
+            @request = salesforce.update('Extension_Request__c', extension_params)
+        elsif params[:extension] == &quot;Extension Available, Rate Change&quot;
+            extension_params[:Rate_Change__c] = 'Yes'
+            extension_params[:Partner_Confirmed_New_Rate__c] = params[:newrate].to_f
+            @request = salesforce.update('Extension_Request__c', extension_params)
+        elsif params[:extension] == &quot;Extension Available, Different Date&quot;
+            # date must be formated as yyyy-mm-dd to save to salesforce
+            extension_params[:Partner_Confirmed_End_Date__c] = format_date_sf(params[:newdate])
+            @request = salesforce.update('Extension_Request__c', extension_params)
+        elsif params[:extension] == &quot;Extension Available, Rate Change, Different Date&quot;
+            extension_params[:Rate_Change__c] = 'Yes'
+            extension_params[:Partner_Confirmed_New_Rate__c] = params[:newrate].to_f
+            extension_params[:Partner_Confirmed_End_Date__c] = format_date_sf(params[:newdate])
+            @request = salesforce.update('Extension_Request__c', extension_params)
+        elsif params[:extension] == &quot;Extension Not Available&quot;
+            extension_params[:Is_Available__c] = 'No'
+            extension_params[:Rate_Change__c] = nil
+            extension_params[:Partner_Confirmed_End_Date__c] = nil
+            @request = salesforce.update('Extension_Request__c', extension_params)
+        end
+
+        redirect_to handle_path(notices_confirmation_success_path, @extension.Opportunity__r.RecordTypeId)
+    end
+end
+</code></pre>
+
+<ul>
+<li>The Extension Request record fields will be updated depending on which option Partner chooses</li>
+<li>Partner will be redirected to <code>/notices/confirmation-success</code> path after confirming extension availability</li>
+<li>If partner tries to refresh the page or re-submit the form, they will be redirected to <code>/notices/already-confirmed</code> path</li>
+</ul>
+<p><br></p>
+<p>Once <code>Partner_Extension_Confirmed_By__c</code> field is captured, a workflow will be triggered and an auto email will be sent to Global Leasing team to either accept or reject partner terms</p>
+<ul>
+<li>Workflow Rule - <a href="https://furnishedquarters--herokudev.lightning.force.com/lightning/setup/WorkflowRules/page?address=%2F01Q0m00000077DY&nodeId=WorkflowRules" target="_blank">OOM Partner Confirmed Extension</a></li>
+<li>Email Template - <a href="https://furnishedquarters--herokudev.lightning.force.com/lightning/setup/CommunicationTemplatesEmail/page?address=%2F00X0m0000012BNO" target="_blank">OOM Partner Confirmed Extension</a></li>
+</ul>
+<p><img src="../assets/global-extension.png"></p>
+<p><br></p>
+<p>If Partner terms are accepted, the <code>FQ_Accepts_Partner_Terms__c</code> checkbox is checked off in Salesforce and an auto email is sent to partner displaying the details of extension request</p>
+<ul>
+<li>Workflow Rule - <a href="https://furnishedquarters--herokudev.lightning.force.com/lightning/setup/WorkflowRules/page?address=%2F01Q0m00000077GI&nodeId=WorkflowRules" target="_blank">OOM FQ Approved Extension</a></li>
+<li>Email Template - <a href="https://furnishedquarters--herokudev.lightning.force.com/lightning/setup/CommunicationTemplatesEmail/page?address=%2F00X0m0000012BRB" target="_blank">OOM FQ Approved Extension</a></li>
+</ul>
+<p><img src="../assets/partner-extension-2.gif"></p>
+<ul>
+<li>Partner is redirected to <code>/notices/fq-confirmation-partner</code> route</li>
+</ul></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>var base_url = '..';</script>
+        <script data-main="../mkdocs/js/search.js" src="../mkdocs/js/require.js"></script>
+        <script src="../js/base.js"></script><div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
