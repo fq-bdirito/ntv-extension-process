@@ -1,6 +1,6 @@
 site_name: Global Notice and Extension Process
 nav: 
-  - Home: user.md
+  - Overview: index.md
   - Notice: notice.md
   - Extend: extend.md
   - Tech: tech.md
