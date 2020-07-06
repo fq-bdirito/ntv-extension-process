@@ -5,7 +5,7 @@ GOAL: Automate the Global Notice and Extension Processes
 <br>
 
 ## Global Notice Process
-* <a href="/notice" target="_blank">More Details</a>
+* <a href="./notice" target="_blank">More Details</a>
 * Process For Partner types - **Corporate Housing, Property Direct Furnished, Hotel**
 * Auto email goes out to notice contact (client or guest)
 * Guest confirms departure
@@ -27,7 +27,7 @@ GOAL: Automate the Global Notice and Extension Processes
 <br>
 
 ## Global Extension Process
-* <a href="/extend" target="_blank">More Details</a>
+* <a href="./extend" target="_blank">More Details</a>
 * Process For Partner types - **Corporate Housing, Property Direct Furnished, Hotel**
 * Auto email goes out to notice contact (client or guest)
 * Guest requests for an extension via the Client Solutions app
