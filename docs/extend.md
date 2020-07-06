@@ -28,8 +28,8 @@ A new Extension Request record is created on Salesforce and the following fields
 #### Partner Confirms Extension Availability
 As soon as a new Extension Request record is created, an auto email is sent to partner
 
-* Workflow Rule - <a></a>
-* Email template - <a></a>
+* Workflow Rule - <a href="https://furnishedquarters--herokudev.lightning.force.com/lightning/setup/WorkflowRules/page?address=%2F01Q0m00000077D4&nodeId=WorkflowRules" target="_blank">OOM Lease Extension - Partner</a>
+* Email template - <a href="https://furnishedquarters--herokudev.lightning.force.com/lightning/setup/CommunicationTemplatesEmail/page?address=%2F00X0m000000z4nY" target="_blank">OOM Lease Extension - Partner</a>
 
 <img src="../assets/partner-extension.gif">
 
@@ -51,12 +51,19 @@ The following fields on Extension Request record are updated in salesforce:
 
 #### FQ Approves Extension
 When extension is confirmed by partner an auto email is sent to Global Leasing team
+
+* Workflow Rule - <a href="https://furnishedquarters--herokudev.lightning.force.com/lightning/setup/WorkflowRules/page?address=%2F01Q0m00000077DY&nodeId=WorkflowRules" target="_blank">OOM Partner Confirmed Extension</a>
+* Email Template - <a href="https://furnishedquarters--herokudev.lightning.force.com/lightning/setup/CommunicationTemplatesEmail/page?address=%2F00X0m0000012BNO" target="_blank">OOM Partner Confirmed Extension</a>
+
 <img src="../assets/global-extension.png">
 
 <br>
 
 #### Notify Partner to Update Reservation
 If extension proposal from partner is approved the `FQ Accepts Partner Terms` checkbox will be checked and an auto email is sent to partner displaying details of extension
+
+* Workflow Rule - <a href="https://furnishedquarters--herokudev.lightning.force.com/lightning/setup/WorkflowRules/page?address=%2F01Q0m00000077GI&nodeId=WorkflowRules" target="_blank">OOM FQ Approved Extension</a>
+* Email Template - <a href="https://furnishedquarters--herokudev.lightning.force.com/lightning/setup/CommunicationTemplatesEmail/page?address=%2F00X0m0000012BRB" target="_blank">OOM FQ Approved Extension</a>
 
 <img src="../assets/partner-extension-2.gif">
 

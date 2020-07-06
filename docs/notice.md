@@ -8,6 +8,7 @@
 
 <br>
 
+#### Guest Confirms Departure
 Guest receives NTV Email and confirms departure
 <img src="../assets/guest-departure.gif">
 
@@ -21,6 +22,9 @@ After guest confirms departure, the following fields on Salesforce Reservation o
 
 <img src="../assets/res-2.gif">
 
+<br>
+
+#### Partner Confirms Guest's Departure
 An auto email is sent to the reservation's `Primary_Partner_Contact__c` to confirm guest's departure:
 
 * Workflow Rule: <a href="https://furnishedquarters--herokudev.lightning.force.com/lightning/setup/WorkflowRules/page?address=%2F01Q0m000000778n&nodeId=WorkflowRules" target="_blank">NTV Partner - Departure Confirmation</a>
@@ -39,6 +43,9 @@ After partner confirms guest's departure the following fields will be updated on
 
 <img src="../assets/partner-departure.png">
 
+<br>
+
+#### Notify Global Team when Partner Confirmed Guest's Departure
 An auto email is sent to Global Lease team notifying the partner has confirmed guest's departure
 
 * Workflow Rule - <a href="https://furnishedquarters--herokudev.lightning.force.com/lightning/setup/WorkflowRules/page?address=%2F01Q0m0000007797&nodeId=WorkflowRules" target="_blank">NTV Provider Notice Confirmed</a>
